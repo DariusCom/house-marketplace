@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
 
-function Offers() {
+function Category() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ function Offers() {
         // Create a query
         const q = query(
           listingsRef,
-          where("offer", "==", true),
+          where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
           limit(10)
         );
@@ -54,12 +54,14 @@ function Offers() {
     };
 
     fetchListings();
-  }, []);
+  }, [params.categoryName]);
 
   return (
     <div className="category">
       <header>
-        <p className="pageHeader">Offers</p>
+        <p className="pageHeader">
+          {`Places for ${params.categoryName === "rent" ? "rent" : "sale"}`}
+        </p>
       </header>
       {loading ? (
         <Spinner />
@@ -78,10 +80,10 @@ function Offers() {
           </main>
         </>
       ) : (
-        <p>There are no current offers</p>
+        <p>No listings for {params.categoryName}</p>
       )}
     </div>
   );
 }
 
-export default Offers;
+export default Category;
