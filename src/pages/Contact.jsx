@@ -2,12 +2,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function Contact() {
   const [message, setMessage] = useState("");
   const [landlord, setLandlord] = useState(null);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const params = useParams();
 
@@ -56,9 +55,7 @@ function Contact() {
             </div>
 
             <a
-              href={`mailto:${landlord.email}?Subject=${searchParams.get(
-                "listingName"
-              )}&body=${message}`}
+              href={`mailto:${landlord.email}?Subject="Marketplace-House"&body=${message}`}
             >
               <button type="button" className="primaryButton">
                 Send Message
